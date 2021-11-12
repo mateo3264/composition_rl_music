@@ -5,7 +5,7 @@ s.boot;
 (
 SynthDef.new(\hum1,{
 	|freq=400,freqFactor=1,freqTime=1,amp=0.1,time1=0.5,time2=0.5,curve1=100,curve2=100,timeFactor=1,times,timeTime=1|
-	var env,envFreq,sig,freqs;
+	var env,envFreq,sig,freqs,envTime1,envTime2;
 	freqs = [freqFactor,freqFactor];
 	times = [timeFactor,timeFactor];
 	envTime1 = EnvGen.kr(Env.circle(times*time1,[timeTime]));
@@ -21,7 +21,7 @@ SynthDef.new(\hum1,{
 
 (
 
-~n_points = 5;
+~n_points = 15;
 ~lista_synths = Array.new(~n_points);
 ~freqs = Array.new(~n_points);
 ~times = Array.new(~n_points);
@@ -41,12 +41,14 @@ SynthDef.new(\hum1,{
 	~times = ~times.add(time);
 }
 )
-
+//change rythm,frequency,attack,release etc
 (
 ~n_points.do{
 	arg i;
-	~lista_synths[i].set('freqFactor',0.8,'curve1',1,'freqTime',2,
-		'curve2',-1,'time1',~times[i]*1,'time2',~times[i]*1);
+	~lista_synths[i].set('freqFactor',1.8,'freqTime',5,'curve1',100,
+		'curve2',-100,'time1',~times[i]*1,'time2',~times[i]*1,
+		'timeFactor',2.1,'timeTime',5,'freq',~freqs[i]*1
+	);
 }
 )
 
