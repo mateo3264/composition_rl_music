@@ -4,10 +4,13 @@ s.boot;
 //
 (
 SynthDef.new(\hum1,{
-	|freq=400,freqFactor=1,freqTime=1,amp=0.1,time1=0.5,time2=0.5,curve1=100,curve2=100|
+	|freq=400,freqFactor=1,freqTime=1,amp=0.1,time1=0.5,time2=0.5,curve1=100,curve2=100,timeFactor=1,times,timeTime=1|
 	var env,envFreq,sig,freqs;
 	freqs = [freqFactor,freqFactor];
-	env = EnvGen.kr(Env.circle([0,amp,0],[time1,time2],[curve1,curve2]));
+	times = [timeFactor,timeFactor];
+	envTime1 = EnvGen.kr(Env.circle(times*time1,[timeTime]));
+	envTime2 = EnvGen.kr(Env.circle(times*time2,[timeTime]));
+	env = EnvGen.kr(Env.circle([0,amp,0],[envTime1,envTime2],[curve1,curve2]));
 
 	//sig = FreeVerb.ar(sig,0.7,0.7,0.7);
 	envFreq = EnvGen.kr(Env.circle(freqs*freq,[freqTime]));
@@ -42,8 +45,8 @@ SynthDef.new(\hum1,{
 (
 ~n_points.do{
 	arg i;
-	~lista_synths[i].set('freqFactor',1.2,'curve1',1,'freqTime',2,
-		'curve2',-1,'time1',~times[i]*1.1,'time2',~times[i]*1.1);
+	~lista_synths[i].set('freqFactor',0.8,'curve1',1,'freqTime',2,
+		'curve2',-1,'time1',~times[i]*1,'time2',~times[i]*1);
 }
 )
 
