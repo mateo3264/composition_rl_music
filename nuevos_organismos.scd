@@ -1,4 +1,11 @@
 s.boot;
+
+
+(
+~glass = Buffer.readChannel(s,"C:/Users/mateo/Desktop/obra/composition_rl_music/glass_sound.aiff",channels:1);
+~pink = Buffer.readChannel(s,"C:/Users/mateo/Desktop/obra/composition_rl_music/animal.wav",channels:1);
+)
+
 //cambiar el timbre
 //grado de tonalidad
 //
@@ -36,10 +43,10 @@ SynthDef.new(\ani1,{
 }).add;
 
 )
-
+s.meter;
 (
 
-~n_points = 15;
+~n_points = 10;
 ~lista_synths = Array.new(~n_points);
 ~freqs = Array.new(~n_points);
 ~times = Array.new(~n_points);
@@ -49,10 +56,10 @@ SynthDef.new(\ani1,{
 	i.postln;
 	time = rrand(0.1,0.9);
 
-	freq = rrand(100,1000).round(~root);
+	freq = rrand(100,1000);//.round(~root);
 	~lista_synths = ~lista_synths.add(Synth('ani1',
 		['freq',freq,'time1',time,'time2',time,
-			'curve2',-100,'amp',0.3,'bufnum',~a1.bufnum
+			'curve2',-100,'amp',0.3,'bufnum',~pink.bufnum,'startPos',rrand(0.1,1.0)
 		]
 	));
 	~freqs = ~freqs.add(freq);
@@ -63,9 +70,9 @@ SynthDef.new(\ani1,{
 (
 ~n_points.do{
 	arg i;
-	~lista_synths[i].set('freqFactor',0.8,'freqTime',5,'curve1',50,
-		'curve2',-50,'time1',~times[i]*1,'time2',~times[i]*1,
-		'timeFactor',2.01,'timeTime',5,'freq',~freqs[i]*1,'pan',1
+	~lista_synths[i].set('freqFactor',1,'freqTime',5,'curve1',10,
+		'curve2',-10,'time1',~times[i]*1,'time2',~times[i]*1,
+		'timeFactor',20.5,'timeTime',5,'freq',~freqs[i]*1,'pan',0.0,'amp',1
 	);
 }
 )
