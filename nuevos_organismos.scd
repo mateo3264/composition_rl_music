@@ -4,7 +4,13 @@ s.boot;
 (
 ~glass = Buffer.readChannel(s,"C:/Users/mateo/Desktop/obra/composition_rl_music/glass_sound.aiff",channels:1);
 ~pink = Buffer.readChannel(s,"C:/Users/mateo/Desktop/obra/composition_rl_music/animal.wav",channels:1);
+~dolphin = Buffer.readChannel(s,"C:/Users/mateo/Desktop/obra/composition_rl_music/animal_dolphin.wav",channels:1);
+~hammer = Buffer.readChannel(s,"C:/Users/mateo/Desktop/obra/composition_rl_music/martillo.wav",channels:1);
+~hammer2 = Buffer.readChannel(s,"C:/Users/mateo/Desktop/obra/composition_rl_music/hammer2.wav",channels:1);
+~alphabet = Buffer.read(s,"C:/Users/mateo/Desktop/obra/composition_rl_music/alphabet.wav");
+
 )
+~dolphin.play
 
 //cambiar el timbre
 //grado de tonalidad
@@ -46,7 +52,7 @@ SynthDef.new(\ani1,{
 s.meter;
 (
 
-~n_points = 10;
+~n_points = 15;
 ~lista_synths = Array.new(~n_points);
 ~freqs = Array.new(~n_points);
 ~times = Array.new(~n_points);
@@ -59,7 +65,7 @@ s.meter;
 	freq = rrand(100,1000);//.round(~root);
 	~lista_synths = ~lista_synths.add(Synth('ani1',
 		['freq',freq,'time1',time,'time2',time,
-			'curve2',-100,'amp',0.3,'bufnum',~pink.bufnum,'startPos',rrand(0.1,1.0)
+			'curve2',-100,'amp',0.3,'bufnum',~glass.bufnum,'startPos',rrand(0.1,1.0)
 		]
 	));
 	~freqs = ~freqs.add(freq);
@@ -70,9 +76,9 @@ s.meter;
 (
 ~n_points.do{
 	arg i;
-	~lista_synths[i].set('freqFactor',1,'freqTime',5,'curve1',10,
-		'curve2',-10,'time1',~times[i]*1,'time2',~times[i]*1,
-		'timeFactor',20.5,'timeTime',5,'freq',~freqs[i]*1,'pan',0.0,'amp',1
+	~lista_synths[i].set('freqFactor',1,'freqTime',5,'curve1',100,
+		'curve2',-100,'time1',~times[i]*1,'time2',~times[i]*1,
+		'timeFactor',15.1,'timeTime',5,'freq',~freqs[i]*1,'pan',-1.0,'amp',0.5
 	);
 }
 )
